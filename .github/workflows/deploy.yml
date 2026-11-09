@@ -18,6 +18,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || vars.VITE_SUPABASE_ANON_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,14 +36,13 @@ jobs:
 
       - name: Build production bundle
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || vars.VITE_SUPABASE_ANON_KEY }}
         run: npm run build
 
       # Verify that Vite produced the compiled bundle, not the dev-server source file.
-      # This step prints dist/index.html in the Actions log and fails hard if the build
-      # produced the wrong output — making future regressions immediately visible.
-      - name: Verify dist/index.html references compiled assets
+      # Also verify environment variables were present without printing secret values.
+      - name: Verify dist/index.html and Supabase configuration
         run: |
           echo "=== dist/index.html ==="
           cat dist/index.html
@@ -58,6 +60,18 @@ jobs:
           if ! grep -q "/assets/" dist/index.html; then
             echo "FATAL: dist/index.html has no /assets/ references — Vite build did not run."
             exit 1
+          fi
+
+          if [ -z "${VITE_SUPABASE_URL}" ]; then
+            echo "WARNING: VITE_SUPABASE_URL is not defined in the build environment."
+          else
+            echo "✓ VITE_SUPABASE_URL is present in the build environment."
+          fi
+
+          if [ -z "${VITE_SUPABASE_ANON_KEY}" ]; then
+            echo "WARNING: VITE_SUPABASE_ANON_KEY is not defined in the build environment."
+          else
+            echo "✓ VITE_SUPABASE_ANON_KEY is present in the build environment."
           fi
 
           echo "✓ dist/index.html correctly references compiled /assets/ files."
