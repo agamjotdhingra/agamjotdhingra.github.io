@@ -5,23 +5,23 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Allow the job to push the compiled dist/ to the gh-pages branch.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -36,22 +36,38 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      # Sanity-check: abort if dist/index.html still references the source file.
+      # This catches any future build regressions before they go live.
+      - name: Verify dist/index.html references compiled assets
+        run: |
+          echo "=== dist/index.html ==="
+          cat dist/index.html
+          echo ""
+          echo "=== dist/ listing ==="
+          ls -la dist/
+          echo "=== dist/assets/ listing ==="
+          ls -la dist/assets/
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+          if grep -q "src/main.tsx" dist/index.html; then
+            echo ""
+            echo "FATAL: dist/index.html still contains /src/main.tsx — Vite build did not run correctly."
+            exit 1
+          fi
+
+          if ! grep -q "/assets/" dist/index.html; then
+            echo ""
+            echo "FATAL: dist/index.html does not reference any /assets/ — compiled output is missing."
+            exit 1
+          fi
+
+          echo ""
+          echo "✓  dist/index.html correctly references compiled /assets/ files. Proceeding with deployment."
+
+      # Push the compiled dist/ folder to the gh-pages branch.
+      # GitHub Pages must be configured to serve from: Branch → gh-pages → / (root)
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: './dist'
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
+          folder: dist        # Upload only the compiled output
+          branch: gh-pages    # Dedicated deployment branch (never commit source here)
+          clean: true         # Remove files from previous deployments
