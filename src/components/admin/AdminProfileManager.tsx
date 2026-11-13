@@ -274,7 +274,7 @@ export const AdminProfileManager: React.FC = () => {
               value={fullName}
               onChange={setFullName}
               required
-              placeholder="Agamjot Dhingra"
+              placeholder="Agamjot Singh Dhingra"
             />
             <InputField
               id="avatarUrl"
@@ -293,7 +293,7 @@ export const AdminProfileManager: React.FC = () => {
             value={headline}
             onChange={setHeadline}
             required
-            placeholder="e.g. ECE Undergraduate · Systems & AI"
+            placeholder="e.g. ENC Undergraduate · Electronics, Software & AI"
           />
 
           <div>

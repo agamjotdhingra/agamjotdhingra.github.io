@@ -6,3 +6,31 @@
   color-scheme: dark;
 }
 
+body {
+  background-color: #0a0a0c;
+  color: #e4e4e7;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Subtle hairline borders and minimal editorial line work */
+.border-hairline {
+  border-color: #1c1e24;
+}
+
+/* Restrained scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0c;
+}
+::-webkit-scrollbar-thumb {
+  background: #23252c;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #32353e;
+}

@@ -14,8 +14,18 @@ export interface FetchProfileResult {
 export async function getProfile(): Promise<FetchProfileResult> {
   if (!isSupabaseConfigured || !supabase) {
     return {
-      profile: null,
-      error: 'Supabase client is not configured. Please verify your environment variables.',
+      profile: {
+        id: 1,
+        full_name: 'Agamjot Singh Dhingra',
+        headline: 'Electronics and Computer Engineering Student | Exploring Software, Electronics & AI',
+        bio: 'I am Agamjot Singh Dhingra, an Electronics and Computer Engineering (ENC) undergraduate at Thapar Institute of Engineering and Technology (2025–2029). I am interested in the intersection of electronics, software engineering and artificial intelligence. I enjoy learning new technologies, experimenting with ideas and building practical projects. This portfolio documents my learning journey, projects and technical growth.',
+        college_email: 'adhingra_be25@thapar.edu',
+        personal_email: 'agamjotsdhingra@gmail.com',
+        phone_number: '7087759597',
+        github_url: 'https://github.com/agamjotdhingra',
+        linkedin_url: 'https://www.linkedin.com/in/agamjot-singh-dhingra-3216b7293/',
+      },
+      error: null,
     };
   }
 
@@ -30,21 +40,74 @@ export async function getProfile(): Promise<FetchProfileResult> {
 
     if (error) {
       return {
-        profile: null,
-        error: error.message || 'Failed to fetch profile from Supabase.',
+        profile: {
+          id: 1,
+          full_name: 'Agamjot Singh Dhingra',
+          headline: 'Electronics and Computer Engineering Student | Exploring Software, Electronics & AI',
+          bio: 'I am Agamjot Singh Dhingra, an Electronics and Computer Engineering (ENC) undergraduate at Thapar Institute of Engineering and Technology (2025–2029). I am interested in the intersection of electronics, software engineering and artificial intelligence. I enjoy learning new technologies, experimenting with ideas and building practical projects.',
+          college_email: 'adhingra_be25@thapar.edu',
+          personal_email: 'agamjotsdhingra@gmail.com',
+          phone_number: '7087759597',
+          github_url: 'https://github.com/agamjotdhingra',
+          linkedin_url: 'https://www.linkedin.com/in/agamjot-singh-dhingra-3216b7293/',
+        },
+        error: null,
+      };
+    }
+
+    if (data) {
+      const profileData = data as Profile;
+      // Ensure canonical name and academic identity are normalized
+      const normalizedFullName =
+        profileData.full_name?.toLowerCase().includes('singh')
+          ? profileData.full_name
+          : 'Agamjot Singh Dhingra';
+
+      const normalizedBio = profileData.bio
+        ? profileData.bio
+            .replace(/Agamjot Dhingra/g, 'Agamjot Singh Dhingra')
+            .replace(/\bECE\b/g, 'ENC')
+            .replace(/2025-2029/g, '2025–2029')
+        : 'I am Agamjot Singh Dhingra, an Electronics and Computer Engineering (ENC) undergraduate at Thapar Institute of Engineering and Technology (2025–2029). I am interested in the intersection of electronics, software engineering and artificial intelligence. I enjoy learning new technologies, experimenting with ideas and building practical projects.';
+
+      return {
+        profile: {
+          ...profileData,
+          full_name: normalizedFullName,
+          bio: normalizedBio,
+        },
+        error: null,
       };
     }
 
     return {
-      profile: (data as Profile) || null,
+      profile: {
+        id: 1,
+        full_name: 'Agamjot Singh Dhingra',
+        headline: 'Electronics and Computer Engineering Student | Exploring Software, Electronics & AI',
+        bio: 'I am Agamjot Singh Dhingra, an Electronics and Computer Engineering (ENC) undergraduate at Thapar Institute of Engineering and Technology (2025–2029). I am interested in the intersection of electronics, software engineering and artificial intelligence.',
+        college_email: 'adhingra_be25@thapar.edu',
+        personal_email: 'agamjotsdhingra@gmail.com',
+        phone_number: '7087759597',
+        github_url: 'https://github.com/agamjotdhingra',
+        linkedin_url: 'https://www.linkedin.com/in/agamjot-singh-dhingra-3216b7293/',
+      },
       error: null,
     };
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : 'An unexpected error occurred while fetching profile.';
     return {
-      profile: null,
-      error: message,
+      profile: {
+        id: 1,
+        full_name: 'Agamjot Singh Dhingra',
+        headline: 'Electronics and Computer Engineering Student | Exploring Software, Electronics & AI',
+        bio: 'I am Agamjot Singh Dhingra, an Electronics and Computer Engineering (ENC) undergraduate at Thapar Institute of Engineering and Technology (2025–2029). I am interested in the intersection of electronics, software engineering and artificial intelligence.',
+        college_email: 'adhingra_be25@thapar.edu',
+        personal_email: 'agamjotsdhingra@gmail.com',
+        phone_number: '7087759597',
+        github_url: 'https://github.com/agamjotdhingra',
+        linkedin_url: 'https://www.linkedin.com/in/agamjot-singh-dhingra-3216b7293/',
+      },
+      error: null,
     };
   }
 }

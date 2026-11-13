@@ -6,13 +6,20 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        editorial: ['"Newsreader"', 'Georgia', 'serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
       colors: {
-        brand: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
+        canvas: {
+          DEFAULT: '#0a0a0c',
+          raised: '#111215',
+          hover: '#16181d',
+        },
+        border: {
+          hairline: '#1c1e24',
+          hover: '#2a2d36',
         },
       },
     },
