@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 const NAV_LINKS = [
+  { label: 'Domains', href: '#domains' },
   { label: 'About', href: '#about' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Notebook', href: '#notebook' },
   { label: 'Contact', href: '#contact' },
 ];
 

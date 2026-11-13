@@ -7,6 +7,10 @@ export interface NavItem {
   href: string;
 }
 
+export type ContentStatus = 'draft' | 'published';
+
+export type EngineeringDomain = 'electronics' | 'software' | 'ai';
+
 export interface Profile {
   id: number;
   full_name: string;
@@ -26,15 +30,65 @@ export interface Profile {
   updated_at?: string | null;
 }
 
+export interface ProjectArchitecture {
+  problem: string;
+  systemDesign: string;
+  keyDecisions: string[];
+  techChoices: { tech: string; reason: string }[];
+  lessonsLearned: string;
+  codeSnippet?: {
+    language: string;
+    filename: string;
+    code: string;
+  };
+}
+
 export interface Project {
   id?: string | number;
   title: string;
+  slug?: string;
   description: string;
+  domain?: EngineeringDomain;
   tech_stack?: string[] | string | null;
   github_url?: string | null;
   live_url?: string | null;
   is_published?: boolean;
-  /** Display order for sorting in the public portfolio (lower = shown first) */
   display_order?: number | null;
   created_at?: string;
+  architecture?: ProjectArchitecture;
+}
+
+export interface GitHubActivityItem {
+  id: string;
+  type: string;
+  repoName: string;
+  repoUrl: string;
+  message?: string;
+  date: string;
+}
+
+export interface ExplorationItem {
+  id: string;
+  title: string;
+  category: string;
+  learning_status: string; // e.g. 'Planning' | 'In Progress' | 'Completed' | 'Studying'
+  description: string;
+  detailed_notes: string;
+  status: ContentStatus;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface NotebookEntry {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  publication_date: string;
+  reading_time: string;
+  description: string;
+  content: string;
+  status: ContentStatus;
+  created_at?: string;
+  updated_at?: string;
 }

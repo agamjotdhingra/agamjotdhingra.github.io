@@ -79,13 +79,14 @@ BEGIN
 END $$;
 
 -- ---------------------------------------------------------------------------
--- STEP 3: Populate profile record (id = 1) with contact information.
--- Only updates fields that are currently NULL to avoid overwriting
--- manually updated values. Preserves existing full_name, headline, bio, etc.
+-- STEP 3: Populate profile record (id = 1) with verified identity & contact info.
 -- ---------------------------------------------------------------------------
 
 UPDATE public.profile
 SET
+  full_name      = 'Agamjot Singh Dhingra',
+  headline       = 'Electronics and Computer Engineering Student | Exploring Software, Electronics & AI',
+  bio            = 'I am Agamjot Singh Dhingra, an Electronics and Computer Engineering (ENC) undergraduate at Thapar Institute of Engineering and Technology (2025–2029). I am interested in the intersection of electronics, software engineering and artificial intelligence. I enjoy learning new technologies, experimenting with ideas and building practical projects. This portfolio documents my learning journey, projects and technical growth.',
   college_email  = COALESCE(college_email,  'adhingra_be25@thapar.edu'),
   personal_email = COALESCE(personal_email, 'agamjotsdhingra@gmail.com'),
   phone_number   = COALESCE(phone_number,   '7087759597'),

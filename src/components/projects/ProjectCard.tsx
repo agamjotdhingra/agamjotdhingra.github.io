@@ -1,35 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Project } from '@/types';
 import { normalizeTechStack } from '@/utils/formatters';
+import { ProjectArchitectureModal } from './ProjectArchitectureModal';
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const { title, description, tech_stack, github_url, live_url } = project;
+  const [archModalOpen, setArchModalOpen] = useState(false);
+  const { title, description, tech_stack, github_url, live_url, architecture, domain } = project;
   const tags = normalizeTechStack(tech_stack);
   const hasGithub = Boolean(github_url && github_url.trim().length > 0);
   const hasLiveDemo = Boolean(live_url && live_url.trim().length > 0);
-  const hasLinks = hasGithub || hasLiveDemo;
+
+  const domainLabels: Record<string, string> = {
+    electronics: 'Electronics & Systems',
+    software: 'Software Engineering',
+    ai: 'Artificial Intelligence',
+  };
 
   return (
-    <article className="group flex flex-col justify-between rounded-2xl border border-[#1e2026] bg-[#111215] p-6 transition-all duration-200 hover:border-zinc-700 hover:bg-[#15161b] sm:p-7">
-      <div>
-        {/* Header with Title and Links */}
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-zinc-100 sm:text-xl">
-            {title}
-          </h3>
+    <>
+      <article className="group flex flex-col justify-between rounded-2xl border border-[#1e2026] bg-[#111215] p-6 transition-all duration-200 hover:border-zinc-700 hover:bg-[#15161b] sm:p-7 text-left">
+        <div>
+          {/* Domain tag & external links */}
+          <div className="flex items-center justify-between gap-4">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
+              {domain ? domainLabels[domain] || domain : 'Engineering Project'}
+            </span>
 
-          {hasLinks && (
-            <div className="flex items-center gap-2 shrink-0 pt-0.5">
+            <div className="flex items-center gap-2 shrink-0">
               {hasGithub && (
                 <a
                   href={github_url!}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
+                  className="rounded-lg p-1 text-zinc-400 transition-colors hover:text-white"
                   aria-label={`Source code for ${title} on GitHub`}
                   title="Source Code"
                 >
@@ -48,7 +55,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   href={live_url!}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
+                  className="rounded-lg p-1 text-zinc-400 transition-colors hover:text-white"
                   aria-label={`Live demo of ${title}`}
                   title="Live Demo"
                 >
@@ -58,28 +65,54 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 </a>
               )}
             </div>
+          </div>
+
+          {/* Title */}
+          <h3 className="mt-3 text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-zinc-100 sm:text-xl">
+            {title}
+          </h3>
+
+          {/* Description */}
+          <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">
+            {description}
+          </p>
+        </div>
+
+        {/* Bottom Section: Tech tags and Architecture trigger */}
+        <div className="mt-6 border-t border-[#1c1e24] pt-4 flex flex-col gap-3">
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {tags.map((tag, index) => (
+                <span
+                  key={`${tag}-${index}`}
+                  className="rounded border border-[#272930] bg-[#141519] px-2 py-0.5 font-mono text-[11px] text-zinc-400"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {architecture && (
+            <button
+              type="button"
+              onClick={() => setArchModalOpen(true)}
+              className="self-start inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 hover:text-white transition-colors pt-1"
+            >
+              <span>Architecture &amp; Key Decisions</span>
+              <span className="font-mono text-zinc-400">&rarr;</span>
+            </button>
           )}
         </div>
+      </article>
 
-        {/* Description */}
-        <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-          {description}
-        </p>
-      </div>
-
-      {/* Tech Tags */}
-      {tags.length > 0 && (
-        <div className="mt-6 flex flex-wrap gap-1.5 border-t border-[#1c1e24] pt-4">
-          {tags.map((tag, index) => (
-            <span
-              key={`${tag}-${index}`}
-              className="rounded border border-[#272930] bg-[#141519] px-2 py-0.5 font-mono text-[11px] text-zinc-400"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+      {/* Modal */}
+      {archModalOpen && (
+        <ProjectArchitectureModal
+          project={project}
+          onClose={() => setArchModalOpen(false)}
+        />
       )}
-    </article>
+    </>
   );
 };
