@@ -1,3 +1,4 @@
+import { SectionHeader } from '@/components/common/SectionHeader';
 import React, { useEffect, useState } from 'react';
 import { ExplorationItem } from '@/types';
 import { getPublishedExplorations } from '@/services/explorationsService';
@@ -19,25 +20,20 @@ export const CurrentlyExploringSection: React.FC = () => {
     };
   }, []);
 
+  // Don't show an empty placeholder to visitors; the section appears once content is published.
+  if (!loading && items.length === 0) return null;
+
   return (
-    <section id="exploring" className="w-full border-t border-[#1c1e24] px-6 py-20 sm:px-8 sm:py-28">
-      <div className="mx-auto max-w-5xl">
-        <div className="max-w-2xl text-left">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-medium tracking-wider text-zinc-400 uppercase">
-              Learning Log
-            </span>
-            <span className="rounded-full border border-zinc-700 bg-zinc-800 px-2 py-0.5 text-[10px] font-mono text-zinc-300">
-              In Progress
-            </span>
-          </div>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Currently Exploring
-          </h2>
-          <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-            A transparent record of concepts, papers, and technologies I am actively studying. These are distinct from production experience—they represent genuine intellectual curiosity and ongoing undergraduate coursework.
-          </p>
-        </div>
+    <section id="exploring" className="w-full border-t border-[#16171c] px-5 py-24 sm:px-8 sm:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          index="+"
+          label="Learning log"
+          title="Currently exploring."
+          emphasis={['exploring.']}
+          description="A transparent record of concepts, papers, and technologies I am actively studying. These are distinct from production experience—they represent genuine intellectual curiosity and ongoing undergraduate coursework."
+          badge={<span className="rounded-full border border-accent/30 bg-accent/[0.06] px-2 py-0.5 text-[9.5px] text-accent">In progress</span>}
+        />
 
         {loading && (
           <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 animate-pulse">
@@ -63,7 +59,7 @@ export const CurrentlyExploringSection: React.FC = () => {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col justify-between rounded-2xl border border-[#1e2026] bg-[#111215] p-6 text-left transition-colors hover:border-zinc-700"
+                className="flex flex-col justify-between rounded-2xl border border-[#1c1e24] bg-[#0f1013] p-6 text-left transition-colors duration-300 hover:border-accent/40"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2">

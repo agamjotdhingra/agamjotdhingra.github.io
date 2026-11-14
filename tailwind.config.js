@@ -21,9 +21,17 @@ export default {
           hairline: '#1c1e24',
           hover: '#2a2d36',
         },
+        // Single signal accent — an oscilloscope-amber trace used sparingly.
+        accent: {
+          DEFAULT: '#f4b740',
+          soft: 'rgba(244, 183, 64, 0.12)',
+          line: 'rgba(244, 183, 64, 0.35)',
+        },
+      },
+      letterSpacing: {
+        display: '-0.045em',
       },
     },
   },
   plugins: [],
 };
-

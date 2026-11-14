@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Profile } from '@/types';
 import { getProfile } from '@/services/profileService';
+import { Reveal } from '@/components/motion/Reveal';
+import { SplitText } from '@/components/motion/SplitText';
+import Magnet from '@/components/reactbits/Magnet';
 
 const IconEmail: React.FC<{ className?: string }> = ({ className = 'h-4 w-4' }) => (
   <svg className={className} fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24" aria-hidden="true">
@@ -108,14 +111,14 @@ const ContactRow: React.FC<ContactRowProps> = ({
   copyLabel,
   badge,
 }) => (
-  <div className="flex items-center justify-between gap-4 rounded-xl border border-[#1e2026] bg-[#111215] px-4 py-3.5 transition-colors hover:border-zinc-700 sm:px-5">
+  <div className="group flex items-center justify-between gap-4 border-b border-[#1c1e24] py-4 transition-colors">
     <div className="flex items-center gap-3.5 min-w-0">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#272930] bg-[#15161a] text-zinc-400">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#24262d] text-zinc-400 transition-colors duration-300 group-hover:border-accent/50 group-hover:text-accent">
         {icon}
       </div>
       <div className="min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-medium text-zinc-400">
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
             {label}
           </span>
           {badge && (
@@ -128,7 +131,7 @@ const ContactRow: React.FC<ContactRowProps> = ({
           href={href}
           target={href.startsWith('mailto:') || href.startsWith('tel:') ? undefined : '_blank'}
           rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-          className="mt-0.5 block truncate text-xs font-medium text-zinc-200 transition-colors hover:text-white"
+          className="link-underline mt-1 inline-block max-w-full truncate text-[15px] font-medium text-zinc-200 transition-colors hover:text-white"
         >
           {value}
         </a>
@@ -169,30 +172,63 @@ export const ContactSection: React.FC = () => {
   const hasGitHub = Boolean(profile?.github_url?.trim());
   const hasLinkedIn = Boolean(profile?.linkedin_url?.trim());
 
+  const primaryEmail = profile?.personal_email?.trim() || profile?.college_email?.trim() || profile?.email?.trim() || '';
+
   const hasAnyContact = hasCollegeEmail || hasPersonalEmail || hasPhone || hasGitHub || hasLinkedIn;
 
   return (
-    <section id="contact" className="w-full border-t border-[#1c1e24] px-6 py-20 sm:px-8 sm:py-28">
-      <div className="mx-auto max-w-5xl">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Header & Note */}
-          <div className="space-y-4 text-left lg:col-span-5">
-            <span className="text-xs font-mono font-medium tracking-wider text-zinc-400 uppercase">
-              Contact
-            </span>
-            <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-              Let&apos;s connect.
-            </h2>
-            <p className="text-sm leading-relaxed text-zinc-400">
-              I am always happy to discuss interesting engineering challenges, software projects, embedded hardware experiments, or potential student internships.
-            </p>
-            <p className="text-xs leading-relaxed text-zinc-400">
-              Based in Patiala, Punjab, India. You can reach out directly via college or personal email, or connect via LinkedIn and GitHub.
-            </p>
+    <section id="contact" className="relative w-full overflow-hidden border-t border-[#16171c] px-5 py-24 sm:px-8 sm:py-36">
+      <div
+        className="pointer-events-none absolute -bottom-40 left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-accent/[0.05] blur-[120px]"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-6xl">
+        <Reveal variant="fade" className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+          <span className="text-accent">04</span>
+          <span className="h-px w-8 bg-zinc-700" aria-hidden="true" />
+          <span>Contact</span>
+        </Reveal>
+
+        <h2 className="mt-6 text-left text-[clamp(3rem,10vw,8.5rem)] font-semibold leading-[0.92] tracking-display text-white">
+          <SplitText text="Let's" className="block" />
+          <SplitText
+            text="connect."
+            className="block"
+            delay={120}
+            wordClassName={() => 'font-editorial font-light italic tracking-[-0.03em] text-zinc-300'}
+          />
+        </h2>
+
+        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Note */}
+          <div className="space-y-5 text-left lg:col-span-5">
+            <Reveal>
+              <p className="text-[15px] leading-relaxed text-zinc-400">
+                I am always happy to discuss interesting engineering challenges, software projects, embedded hardware experiments, or potential student internships.
+              </p>
+            </Reveal>
+            <Reveal delay={100}>
+              <p className="text-[13px] leading-relaxed text-zinc-500">
+                Based in Patiala, Punjab, India. You can reach out directly via college or personal email, or connect via LinkedIn and GitHub.
+              </p>
+            </Reveal>
+            {primaryEmail && (
+              <Reveal delay={200} className="pt-3">
+                <Magnet padding={50} magnetStrength={3} maxOffset={10}>
+                  <a
+                    href={`mailto:${primaryEmail}`}
+                    className="group inline-flex items-center gap-2.5 rounded-full bg-accent px-6 py-3 text-[13px] font-semibold text-zinc-950 transition-shadow duration-500 hover:shadow-[0_0_40px_-4px_rgba(244,183,64,0.55)]"
+                  >
+                    Write me an email
+                    <span className="transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">&rarr;</span>
+                  </a>
+                </Magnet>
+              </Reveal>
+            )}
           </div>
 
           {/* Contact Directory */}
-          <div className="space-y-3 lg:col-span-7">
+          <Reveal delay={150} className="border-t border-[#1c1e24] lg:col-span-7">
             {loading && (
               <div className="space-y-3 animate-pulse">
                 {[1, 2, 3, 4].map((i) => (
@@ -269,7 +305,7 @@ export const ContactSection: React.FC = () => {
                 )}
               </>
             )}
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
