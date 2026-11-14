@@ -2,116 +2,136 @@ import React, { useState } from 'react';
 import { Project } from '@/types';
 import { normalizeTechStack } from '@/utils/formatters';
 import { ProjectArchitectureModal } from './ProjectArchitectureModal';
+import { TraceSignature } from './TraceSignature';
+import SpotlightCard from '@/components/reactbits/SpotlightCard';
+import Magnet from '@/components/reactbits/Magnet';
 
 interface ProjectCardProps {
   project: Project;
+  index?: number;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const domainLabels: Record<string, string> = {
+  electronics: 'Electronics & Systems',
+  software: 'Software Engineering',
+  ai: 'Artificial Intelligence',
+};
+
+const GitHubIcon = (
+  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      fillRule="evenodd"
+      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+const ExternalIcon = (
+  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24" aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17 17 7M8 7h9v9" />
+  </svg>
+);
+
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0 }) => {
   const [archModalOpen, setArchModalOpen] = useState(false);
   const { title, description, tech_stack, github_url, live_url, architecture, domain } = project;
   const tags = normalizeTechStack(tech_stack);
   const hasGithub = Boolean(github_url && github_url.trim().length > 0);
   const hasLiveDemo = Boolean(live_url && live_url.trim().length > 0);
-
-  const domainLabels: Record<string, string> = {
-    electronics: 'Electronics & Systems',
-    software: 'Software Engineering',
-    ai: 'Artificial Intelligence',
-  };
+  const flip = index % 2 === 1;
 
   return (
     <>
-      <article className="group flex flex-col justify-between rounded-2xl border border-[#1e2026] bg-[#111215] p-6 transition-all duration-200 hover:border-zinc-700 hover:bg-[#15161b] sm:p-7 text-left">
-        <div>
-          {/* Domain tag & external links */}
-          <div className="flex items-center justify-between gap-4">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
-              {domain ? domainLabels[domain] || domain : 'Engineering Project'}
-            </span>
+      <SpotlightCard
+        className="!rounded-3xl !p-0 text-left"
+        spotlightColor="#f4b740"
+        intensity={0.1}
+        spotlightSize={420}
+        borderGlow={0.6}
+        style={{ '--spotlight-card-surface': '#0e0f12' } as React.CSSProperties}
+      >
+        <article className="group grid grid-cols-1 gap-8 p-6 sm:p-9 lg:grid-cols-12 lg:gap-12 lg:p-11">
+          {/* Copy */}
+          <div className={`flex flex-col lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
+            <div className="flex items-center gap-3 font-mono text-[10.5px] uppercase tracking-[0.16em]">
+              <span className="text-accent">P—{String(index + 1).padStart(2, '0')}</span>
+              <span className="h-px w-6 bg-zinc-700" aria-hidden="true" />
+              <span className="text-zinc-500">{domain ? domainLabels[domain] || domain : 'Engineering Project'}</span>
+            </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <h3 className="mt-5 text-[1.75rem] font-semibold leading-[1.1] tracking-[-0.03em] text-white sm:text-4xl">
+              {title}
+            </h3>
+
+            <p className="mt-5 text-[14.5px] leading-relaxed text-zinc-400">{description}</p>
+
+            {tags.length > 0 && (
+              <ul className="mt-7 flex flex-wrap gap-1.5" aria-label="Technologies">
+                {tags.map((tag, i) => (
+                  <li
+                    key={`${tag}-${i}`}
+                    className="rounded-md border border-[#23252c] bg-[#121317] px-2 py-1 font-mono text-[11px] text-zinc-400 transition-colors duration-300 group-hover:border-[#2c2f37] group-hover:text-zinc-300"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div className="mt-auto flex flex-wrap items-center gap-3 pt-9">
+              {architecture && (
+                <Magnet padding={30} magnetStrength={4} maxOffset={6}>
+                  <button
+                    type="button"
+                    onClick={() => setArchModalOpen(true)}
+                    className="group/btn inline-flex items-center gap-2 rounded-full bg-zinc-100 px-5 py-2.5 text-[13px] font-medium text-zinc-950 transition-colors hover:bg-white"
+                  >
+                    Architecture &amp; key decisions
+                    <span className="transition-transform duration-300 group-hover/btn:translate-x-0.5" aria-hidden="true">
+                      &rarr;
+                    </span>
+                  </button>
+                </Magnet>
+              )}
               {hasGithub && (
                 <a
                   href={github_url!}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-1 text-zinc-400 transition-colors hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#2a2d36] px-4 py-2.5 text-[13px] text-zinc-300 transition-colors hover:border-zinc-400 hover:text-white"
                   aria-label={`Source code for ${title} on GitHub`}
-                  title="Source Code"
                 >
-                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  {GitHubIcon}
+                  Source
                 </a>
               )}
-
               {hasLiveDemo && (
                 <a
                   href={live_url!}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-1 text-zinc-400 transition-colors hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#2a2d36] px-4 py-2.5 text-[13px] text-zinc-300 transition-colors hover:border-zinc-400 hover:text-white"
                   aria-label={`Live demo of ${title}`}
-                  title="Live Demo"
                 >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                  </svg>
+                  Live demo
+                  {ExternalIcon}
                 </a>
               )}
             </div>
           </div>
 
-          {/* Title */}
-          <h3 className="mt-3 text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-zinc-100 sm:text-xl">
-            {title}
-          </h3>
-
-          {/* Description */}
-          <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">
-            {description}
-          </p>
-        </div>
-
-        {/* Bottom Section: Tech tags and Architecture trigger */}
-        <div className="mt-6 border-t border-[#1c1e24] pt-4 flex flex-col gap-3">
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {tags.map((tag, index) => (
-                <span
-                  key={`${tag}-${index}`}
-                  className="rounded border border-[#272930] bg-[#141519] px-2 py-0.5 font-mono text-[11px] text-zinc-400"
-                >
-                  {tag}
-                </span>
-              ))}
+          {/* Visual */}
+          <div className={`lg:col-span-5 ${flip ? 'lg:order-1' : ''}`}>
+            <div className="transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 lg:sticky lg:top-28">
+              <TraceSignature title={title} domain={domain} index={index} />
             </div>
-          )}
+          </div>
+        </article>
+      </SpotlightCard>
 
-          {architecture && (
-            <button
-              type="button"
-              onClick={() => setArchModalOpen(true)}
-              className="self-start inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 hover:text-white transition-colors pt-1"
-            >
-              <span>Architecture &amp; Key Decisions</span>
-              <span className="font-mono text-zinc-400">&rarr;</span>
-            </button>
-          )}
-        </div>
-      </article>
-
-      {/* Modal */}
       {archModalOpen && (
-        <ProjectArchitectureModal
-          project={project}
-          onClose={() => setArchModalOpen(false)}
-        />
+        <ProjectArchitectureModal project={project} onClose={() => setArchModalOpen(false)} />
       )}
     </>
   );

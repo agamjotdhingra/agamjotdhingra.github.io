@@ -20,7 +20,7 @@ const AppContent: React.FC = () => {
 
   // Public portfolio view (kept completely intact)
   return (
-    <div className="relative flex min-h-screen flex-col bg-[#0a0a0c] font-sans text-zinc-200 selection:bg-zinc-800 selection:text-zinc-100">
+    <div className="grain relative flex min-h-screen flex-col bg-[#0a0a0c] font-sans text-zinc-200">
       <Navbar />
       <main className="flex flex-1 flex-col">
         <HomePage />

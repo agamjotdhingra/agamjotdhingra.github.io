@@ -5,6 +5,8 @@ import { ProjectCard } from './ProjectCard';
 import { ProjectsLoadingState } from './ProjectsLoadingState';
 import { ProjectsEmptyState } from './ProjectsEmptyState';
 import { ProjectsErrorState } from './ProjectsErrorState';
+import { SectionHeader } from '@/components/common/SectionHeader';
+import { Reveal } from '@/components/motion/Reveal';
 
 export const ProjectsSection: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -33,23 +35,18 @@ export const ProjectsSection: React.FC = () => {
   }, [fetchProjects]);
 
   return (
-    <section id="projects" className="w-full border-t border-[#1c1e24] px-6 py-20 sm:px-8 sm:py-28">
-      <div className="mx-auto max-w-5xl">
-        {/* Section Header */}
-        <div className="max-w-2xl text-left">
-          <span className="text-xs font-mono font-medium tracking-wider text-zinc-400 uppercase">
-            Projects
-          </span>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Selected Work &amp; Technical Experiments
-          </h2>
-          <p className="mt-2 text-sm text-zinc-400">
-            A dynamic collection of software applications, hackathon solutions, and machine learning explorations.
-          </p>
-        </div>
+    <section id="projects" className="relative w-full border-t border-[#16171c] px-5 py-24 sm:px-8 sm:py-36">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          index="03"
+          label="Selected work"
+          title="Selected work & technical experiments."
+          emphasis={['technical', 'experiments.']}
+          description="A dynamic collection of software applications, hackathon solutions, and machine learning explorations."
+        />
 
         {/* State Rendering */}
-        <div className="mt-12">
+        <div className="mt-16">
           {loading && <ProjectsLoadingState />}
 
           {!loading && error && (
@@ -61,12 +58,11 @@ export const ProjectsSection: React.FC = () => {
           )}
 
           {!loading && !error && projects.length > 0 && (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="flex flex-col gap-6">
               {projects.map((project, index) => (
-                <ProjectCard
-                  key={project.id ?? `${project.title}-${index}`}
-                  project={project}
-                />
+                <Reveal key={project.id ?? `${project.title}-${index}`} delay={60}>
+                  <ProjectCard project={project} index={index} />
+                </Reveal>
               ))}
             </div>
           )}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NotebookEntry } from '@/types';
 import { getPublishedArticles } from '@/services/notebookService';
 import { NotebookArticleModal } from './NotebookArticleModal';
+import { SectionHeader } from '@/components/common/SectionHeader';
 
 export const NotebookSection: React.FC = () => {
   const [entries, setEntries] = useState<NotebookEntry[]>([]);
@@ -29,23 +30,22 @@ export const NotebookSection: React.FC = () => {
       ? entries
       : entries.filter((e) => e.category.toLowerCase() === selectedCategory);
 
+  // Don't show an empty placeholder to visitors; the section appears once content is published.
+  if (!loading && entries.length === 0) return null;
+
   return (
     <>
-      <section id="notebook" className="w-full border-t border-[#1c1e24] px-6 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-5xl">
+      <section id="notebook" className="w-full border-t border-[#16171c] px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto max-w-6xl">
           {/* Section Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-left">
-            <div className="max-w-2xl">
-              <span className="text-xs font-mono font-medium tracking-wider text-zinc-400 uppercase">
-                Engineering Notebook
-              </span>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Notes, Experiments &amp; Technical Breakdowns
-              </h2>
-              <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-                A public repository of written reflections documenting engineering challenges, architectural comparisons, and core concepts learned in coursework.
-              </p>
-            </div>
+          <div className="flex flex-col justify-between gap-6 text-left sm:flex-row sm:items-end">
+            <SectionHeader
+              index="+"
+              label="Engineering notebook"
+              title="Notes, experiments & technical breakdowns."
+              emphasis={['experiments']}
+              description="A public repository of written reflections documenting engineering challenges, architectural comparisons, and core concepts learned in coursework."
+            />
 
             {/* Category Filter (rendered only when entries exist) */}
             {categories.length > 2 && (
@@ -94,7 +94,7 @@ export const NotebookSection: React.FC = () => {
                 <article
                   key={entry.id}
                   onClick={() => setSelectedEntry(entry)}
-                  className="group cursor-pointer rounded-2xl border border-[#1e2026] bg-[#111215] p-6 transition-all duration-200 hover:border-zinc-700 hover:bg-[#141519] sm:p-7"
+                  className="group cursor-pointer rounded-2xl border border-[#1e2026] bg-[#111215] p-6 transition-all duration-200 hover:border-accent/40 hover:bg-[#121317] sm:p-7"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
                     <div className="flex items-center gap-2.5 font-mono text-[11px] text-zinc-400 uppercase tracking-wider">

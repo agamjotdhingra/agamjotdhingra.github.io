@@ -59,10 +59,10 @@ const InputField: React.FC<InputFieldProps> = ({
   hint,
 }) => (
   <div>
-    <label htmlFor={id} className="block text-xs font-medium uppercase tracking-wider text-slate-300">
+    <label htmlFor={id} className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
       {label} {required && <span className="text-emerald-400">*</span>}
     </label>
-    {hint && <p className="mt-0.5 text-[11px] text-slate-500">{hint}</p>}
+    {hint && <p className="mt-0.5 text-[11px] text-zinc-500">{hint}</p>}
     <input
       id={id}
       type={type}
@@ -70,8 +70,8 @@ const InputField: React.FC<InputFieldProps> = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`mt-2 block w-full rounded-xl border px-4 py-2.5 text-sm text-white bg-slate-950 focus:outline-none focus:border-emerald-500 transition-colors ${
-        error ? 'border-red-700' : 'border-slate-700'
+      className={`mt-2 block w-full rounded-xl border px-4 py-2.5 text-sm text-white bg-[#0a0a0c] focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors ${
+        error ? 'border-red-700' : 'border-[#26282f]'
       }`}
     />
     {error && <p className="mt-1 text-[11px] text-red-400">{error}</p>}
@@ -209,12 +209,12 @@ export const AdminProfileManager: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="space-y-4 rounded-3xl border border-slate-800 bg-slate-900/40 p-8 animate-pulse">
-        <div className="h-6 w-48 rounded bg-slate-800" />
+      <div className="space-y-4 rounded-3xl border border-[#1c1e24] bg-[#0f1013] p-8 animate-pulse">
+        <div className="h-6 w-48 rounded bg-[#15161a]" />
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-10 w-full rounded bg-slate-800" />
+          <div key={i} className="h-10 w-full rounded bg-[#15161a]" />
         ))}
-        <div className="h-28 w-full rounded bg-slate-800" />
+        <div className="h-28 w-full rounded bg-[#15161a]" />
       </div>
     );
   }
@@ -224,8 +224,8 @@ export const AdminProfileManager: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white">Profile Editor</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Profile Editor</h2>
+          <p className="text-xs text-zinc-400">
             Edit your live profile details stored in{' '}
             <code className="font-mono text-emerald-400">public.profile</code> (id = 1).
           </p>
@@ -233,7 +233,7 @@ export const AdminProfileManager: React.FC = () => {
         <button
           type="button"
           onClick={fetchProfile}
-          className="rounded-xl border border-slate-800 bg-slate-900/60 px-3.5 py-1.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
+          className="rounded-full border border-[#2a2d36] bg-transparent px-3.5 py-1.5 text-xs text-zinc-300 hover:bg-[#17181d] hover:text-white transition-colors"
         >
           Discard / Reset
         </button>
@@ -259,11 +259,11 @@ export const AdminProfileManager: React.FC = () => {
         </div>
       )}
 
-      <form onSubmit={handleSave} className="rounded-3xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl sm:p-8 space-y-7" noValidate>
+      <form onSubmit={handleSave} className="rounded-2xl border border-[#1c1e24] bg-[#0f1013] p-6 sm:p-8 space-y-7" noValidate>
 
         {/* ── IDENTITY ─────────────────────────────────────────────── */}
         <fieldset className="space-y-5">
-          <legend className="text-[11px] font-semibold uppercase tracking-widest text-slate-500">
+          <legend className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-accent/80">
             Identity
           </legend>
 
@@ -297,7 +297,7 @@ export const AdminProfileManager: React.FC = () => {
           />
 
           <div>
-            <label htmlFor="bio" className="block text-xs font-medium uppercase tracking-wider text-slate-300">
+            <label htmlFor="bio" className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
               Bio &amp; Narrative <span className="text-emerald-400">*</span>
             </label>
             <textarea
@@ -306,16 +306,16 @@ export const AdminProfileManager: React.FC = () => {
               rows={4}
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              className="mt-2 block w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm leading-relaxed text-white focus:border-emerald-500 focus:outline-none"
+              className="mt-2 block w-full rounded-xl border border-[#26282f] bg-[#0a0a0c] px-4 py-2.5 text-sm leading-relaxed text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
             />
           </div>
         </fieldset>
 
-        <div className="border-t border-slate-800" />
+        <div className="border-t border-[#1c1e24]" />
 
         {/* ── CONTACT ─────────────────────────────────────────────── */}
         <fieldset className="space-y-5">
-          <legend className="text-[11px] font-semibold uppercase tracking-widest text-slate-500">
+          <legend className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-accent/80">
             Contact Information
           </legend>
 
@@ -353,11 +353,11 @@ export const AdminProfileManager: React.FC = () => {
           />
         </fieldset>
 
-        <div className="border-t border-slate-800" />
+        <div className="border-t border-[#1c1e24]" />
 
         {/* ── SOCIAL LINKS ─────────────────────────────────────────── */}
         <fieldset className="space-y-5">
-          <legend className="text-[11px] font-semibold uppercase tracking-widest text-slate-500">
+          <legend className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-accent/80">
             Social &amp; Professional Links
           </legend>
 
@@ -384,8 +384,8 @@ export const AdminProfileManager: React.FC = () => {
         </fieldset>
 
         {/* ── Submit ───────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between border-t border-slate-800 pt-6">
-          <span className="text-[11px] text-slate-500">
+        <div className="flex items-center justify-between border-t border-[#1c1e24] pt-6">
+          <span className="text-[11px] text-zinc-500">
             Last Updated:{' '}
             {profile?.updated_at ? new Date(profile.updated_at).toLocaleString() : 'Never'}
           </span>
@@ -393,11 +393,11 @@ export const AdminProfileManager: React.FC = () => {
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-2.5 text-xs font-semibold text-slate-950 shadow-sm transition-all hover:bg-emerald-400 hover:shadow-emerald-500/20 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-xs font-semibold text-zinc-950 shadow-sm transition-all hover:brightness-110 hover:shadow-[0_0_30px_-6px_rgba(244,183,64,0.5)] disabled:opacity-50"
           >
             {saving ? (
               <>
-                <svg className="h-3.5 w-3.5 animate-spin text-slate-950" fill="none" viewBox="0 0 24 24">
+                <svg className="h-3.5 w-3.5 animate-spin text-zinc-950" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>

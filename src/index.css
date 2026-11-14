@@ -4,6 +4,14 @@
 
 :root {
   color-scheme: dark;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --accent: #f4b740;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Keep anchored section headings clear of the floating nav. */
+  scroll-padding-top: 96px;
 }
 
 body {
@@ -13,6 +21,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(244, 183, 64, 0.25);
+  color: #fafafa;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 /* Subtle hairline borders and minimal editorial line work */
@@ -33,4 +52,142 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #32353e;
+}
+
+/* Faint film grain over the whole page to keep flat blacks from feeling digital. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  transition:
+    opacity 900ms var(--ease-out-expo),
+    transform 900ms var(--ease-out-expo),
+    filter 900ms var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal:not([data-in]) {
+  opacity: 0;
+}
+.reveal[data-reveal='rise']:not([data-in]) {
+  transform: translate3d(0, 28px, 0);
+}
+.reveal[data-reveal='blur']:not([data-in]) {
+  transform: translate3d(0, 12px, 0);
+  filter: blur(10px);
+}
+
+/* ---------- Split text (BlurText-style) ---------- */
+.split-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for descenders and italic overhang. */
+  padding: 0 0.06em 0.12em;
+  margin: 0 -0.06em -0.12em;
+}
+.split-word {
+  display: inline-block;
+  transition:
+    transform 1100ms var(--ease-out-expo),
+    opacity 1100ms var(--ease-out-expo),
+    filter 1100ms var(--ease-out-expo);
+  transition-delay: var(--split-delay, 0ms);
+}
+:not([data-in]) > .split-word-mask > .split-word {
+  transform: translate3d(0, 105%, 0);
+  opacity: 0;
+  filter: blur(8px);
+}
+
+/* ---------- Scroll-linked words (ScrollReveal-style) ---------- */
+.scroll-word {
+  /* Each word lights up as --scroll-progress passes its position. */
+  --lit: clamp(0, calc((var(--scroll-progress, 0) - var(--word-at)) * 12), 1);
+  opacity: calc(0.16 + 0.84 * var(--lit));
+  transition: opacity 120ms linear;
+}
+
+/* ---------- Signal trace drawing ---------- */
+.trace-path {
+  stroke-dasharray: var(--trace-length, 1600);
+  stroke-dashoffset: var(--trace-length, 1600);
+  transition: stroke-dashoffset 2200ms var(--ease-out-expo);
+}
+[data-in] .trace-path {
+  stroke-dashoffset: 0;
+}
+
+/* ---------- Status pulse ---------- */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: pulse-ring 2s var(--ease-out-expo) infinite;
+}
+
+/* ---------- Underline link ---------- */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 500ms var(--ease-out-expo), color 200ms;
+}
+.link-underline:hover,
+.link-underline:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* ---------- Reduced motion: show everything, animate nothing ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+  }
+  .reveal:not([data-in]),
+  :not([data-in]) > .split-word-mask > .split-word {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .trace-path {
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* ---------- Hero micro-animations ---------- */
+@keyframes signal {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(320%); }
+}
+@keyframes scrollcue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+/* ---------- Admin panel tab switch ---------- */
+@keyframes admin-panel-in {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
 }

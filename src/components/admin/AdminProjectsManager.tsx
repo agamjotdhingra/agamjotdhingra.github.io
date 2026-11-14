@@ -335,8 +335,8 @@ export const AdminProjectsManager: React.FC = () => {
       {/* ── Top Controls ────────────────────────────────────────── */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white">Projects Manager</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Projects Manager</h2>
+          <p className="text-xs text-zinc-400">
             Total: {projects.length} &bull; Published:{' '}
             <span className="text-emerald-400">{publishedCount}</span> &bull; Drafts:{' '}
             <span className="text-amber-400">{draftCount}</span>
@@ -346,7 +346,7 @@ export const AdminProjectsManager: React.FC = () => {
         <button
           type="button"
           onClick={handleOpenCreate}
-          className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-xs font-semibold text-slate-950 shadow-sm transition-all hover:bg-emerald-400 hover:shadow-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2.5 text-xs font-semibold text-zinc-950 shadow-sm transition-all hover:brightness-110 hover:shadow-[0_0_30px_-6px_rgba(244,183,64,0.5)] focus:outline-none focus:ring-2 focus:ring-accent/40"
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -383,22 +383,22 @@ export const AdminProjectsManager: React.FC = () => {
       {loading ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-48 rounded-2xl border border-slate-800 bg-slate-900/30 animate-pulse" />
+            <div key={i} className="h-48 rounded-2xl border border-[#1c1e24] bg-[#0f1013] animate-pulse" />
           ))}
         </div>
       ) : projects.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-800 bg-slate-900/20 py-16 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/60 text-emerald-400">
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-[#1c1e24] bg-[#0f1013] py-16 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#1c1e24] bg-[#0f1013] text-emerald-400">
             <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
           </div>
           <h3 className="mt-4 text-base font-semibold text-white">No projects yet</h3>
-          <p className="mt-1 text-xs text-slate-400">Create your first showcase project.</p>
+          <p className="mt-1 text-xs text-zinc-400">Create your first showcase project.</p>
           <button
             type="button"
             onClick={handleOpenCreate}
-            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-emerald-400"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-zinc-950 hover:brightness-110"
           >
             Create Project
           </button>
@@ -413,7 +413,7 @@ export const AdminProjectsManager: React.FC = () => {
             return (
               <div
                 key={project.id ?? project.title}
-                className="group relative flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/40 p-6 transition-all hover:border-slate-700 hover:bg-slate-900/70"
+                className="group relative flex flex-col justify-between rounded-2xl border border-[#1c1e24] bg-[#0f1013] p-6 transition-all hover:border-accent/40 hover:bg-[#121317]"
               >
                 <div>
                   {/* Status badge + Edit/Delete controls */}
@@ -439,7 +439,7 @@ export const AdminProjectsManager: React.FC = () => {
                         disabled={isFirst}
                         onClick={() => handleMoveOrder(project, 'up')}
                         title="Move up in display order"
-                        className="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-800 hover:text-slate-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                        className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-[#17181d] hover:text-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
@@ -452,7 +452,7 @@ export const AdminProjectsManager: React.FC = () => {
                         disabled={isLast}
                         onClick={() => handleMoveOrder(project, 'down')}
                         title="Move down in display order"
-                        className="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-800 hover:text-slate-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                        className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-[#17181d] hover:text-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -464,7 +464,7 @@ export const AdminProjectsManager: React.FC = () => {
                         type="button"
                         onClick={() => handleOpenEdit(project)}
                         title="Edit Project"
-                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                        className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-[#17181d] hover:text-white"
                       >
                         <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
@@ -476,7 +476,7 @@ export const AdminProjectsManager: React.FC = () => {
                         type="button"
                         onClick={() => setProjectToDelete(project)}
                         title="Delete Project"
-                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-red-950/40 hover:text-red-400"
+                        className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-red-950/40 hover:text-red-400"
                       >
                         <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -486,22 +486,22 @@ export const AdminProjectsManager: React.FC = () => {
                   </div>
 
                   {/* Title & description */}
-                  <h3 className="mt-3 text-base font-bold text-white group-hover:text-emerald-400 transition-colors">
+                  <h3 className="mt-3 text-base font-bold text-white group-hover:text-accent transition-colors">
                     {project.title}
                   </h3>
-                  <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-slate-400">
+                  <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-zinc-400">
                     {project.description}
                   </p>
                 </div>
 
                 {/* Footer: tags + links + order badge */}
-                <div className="mt-4 border-t border-slate-800/60 pt-3">
+                <div className="mt-4 border-t border-[#1c1e24] pt-3">
                   {tags.length > 0 && (
                     <div className="flex flex-wrap gap-1.5">
                       {tags.map((tag, idx) => (
                         <span
                           key={`${tag}-${idx}`}
-                          className="rounded bg-slate-950 px-2 py-0.5 font-mono text-[10px] text-emerald-400/90 border border-slate-800"
+                          className="rounded bg-[#0a0a0c] px-2 py-0.5 font-mono text-[10px] text-emerald-400/90 border border-[#1c1e24]"
                         >
                           {tag}
                         </span>
@@ -510,13 +510,13 @@ export const AdminProjectsManager: React.FC = () => {
                   )}
 
                   <div className="mt-3 flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-xs text-slate-500">
+                    <div className="flex items-center gap-3 text-xs text-zinc-500">
                       {project.github_url && (
                         <a
                           href={project.github_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hover:text-slate-300 transition-colors"
+                          className="hover:text-zinc-300 transition-colors"
                         >
                           GitHub ↗
                         </a>
@@ -526,13 +526,13 @@ export const AdminProjectsManager: React.FC = () => {
                           href={project.live_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hover:text-emerald-400 transition-colors"
+                          className="hover:text-accent transition-colors"
                         >
                           Live ↗
                         </a>
                       )}
                     </div>
-                    <span className="text-[10px] font-mono text-slate-600">
+                    <span className="text-[10px] font-mono text-zinc-600">
                       order: {project.display_order ?? 0}
                     </span>
                   </div>
@@ -545,13 +545,13 @@ export const AdminProjectsManager: React.FC = () => {
 
       {/* ── CREATE / EDIT MODAL ────────────────────────────────────── */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-xl rounded-3xl border border-slate-800 bg-slate-900 p-6 shadow-2xl sm:p-8 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-xl rounded-3xl border border-[#1c1e24] bg-[#0f1013] p-6 shadow-2xl sm:p-8 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-[#1c1e24] pb-4">
               <h3 className="text-lg font-bold text-white">
                 {isEditing ? 'Edit Project' : 'Create New Project'}
               </h3>
-              <button type="button" onClick={handleCloseModal} className="text-slate-400 hover:text-white text-xl leading-none">
+              <button type="button" onClick={handleCloseModal} className="text-zinc-400 hover:text-white text-xl leading-none">
                 &times;
               </button>
             </div>
@@ -565,7 +565,7 @@ export const AdminProjectsManager: React.FC = () => {
             <form onSubmit={handleSaveProject} className="mt-5 space-y-4" noValidate>
               {/* Title */}
               <div>
-                <label className="block text-xs font-medium uppercase tracking-wider text-slate-300">
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
                   Project Title <span className="text-emerald-400">*</span>
                 </label>
                 <input
@@ -574,13 +574,13 @@ export const AdminProjectsManager: React.FC = () => {
                   value={formData.title}
                   onChange={(e) => setField('title', e.target.value)}
                   placeholder="e.g. Distributed Task Queue"
-                  className="mt-1 block w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-xl border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2.5 text-sm text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-medium uppercase tracking-wider text-slate-300">
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
                   Description <span className="text-emerald-400">*</span>
                 </label>
                 <textarea
@@ -589,37 +589,37 @@ export const AdminProjectsManager: React.FC = () => {
                   value={formData.description}
                   onChange={(e) => setField('description', e.target.value)}
                   placeholder="Summarize the project's purpose, architecture and outcome..."
-                  className="mt-1 block w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-xl border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2.5 text-sm text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
 
               {/* Tech Stack */}
               <div>
-                <label className="block text-xs font-medium uppercase tracking-wider text-slate-300">
-                  Tech Stack <span className="text-slate-500 normal-case font-normal">(comma-separated)</span>
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
+                  Tech Stack <span className="text-zinc-500 normal-case font-normal">(comma-separated)</span>
                 </label>
                 <input
                   type="text"
                   value={formData.tech_stack_input}
                   onChange={(e) => setField('tech_stack_input', e.target.value)}
                   placeholder="React, TypeScript, Node.js, PostgreSQL"
-                  className="mt-1 block w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-xl border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2.5 text-sm text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
 
               {/* URLs */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-slate-300">
-                    GitHub URL <span className="text-slate-500 normal-case font-normal">(optional)</span>
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
+                    GitHub URL <span className="text-zinc-500 normal-case font-normal">(optional)</span>
                   </label>
                   <input
                     type="url"
                     value={formData.github_url}
                     onChange={(e) => setField('github_url', e.target.value)}
                     placeholder="https://github.com/..."
-                    className={`mt-1 block w-full rounded-xl border px-3.5 py-2.5 text-sm text-white bg-slate-950 focus:outline-none focus:border-emerald-500 ${
-                      fieldErrors.github_url ? 'border-red-700' : 'border-slate-700'
+                    className={`mt-1 block w-full rounded-xl border px-3.5 py-2.5 text-sm text-white bg-[#0a0a0c] focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 ${
+                      fieldErrors.github_url ? 'border-red-700' : 'border-[#26282f]'
                     }`}
                   />
                   {fieldErrors.github_url && (
@@ -628,16 +628,16 @@ export const AdminProjectsManager: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-slate-300">
-                    Live Demo URL <span className="text-slate-500 normal-case font-normal">(optional)</span>
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
+                    Live Demo URL <span className="text-zinc-500 normal-case font-normal">(optional)</span>
                   </label>
                   <input
                     type="url"
                     value={formData.live_url}
                     onChange={(e) => setField('live_url', e.target.value)}
                     placeholder="https://example.com"
-                    className={`mt-1 block w-full rounded-xl border px-3.5 py-2.5 text-sm text-white bg-slate-950 focus:outline-none focus:border-emerald-500 ${
-                      fieldErrors.live_url ? 'border-red-700' : 'border-slate-700'
+                    className={`mt-1 block w-full rounded-xl border px-3.5 py-2.5 text-sm text-white bg-[#0a0a0c] focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 ${
+                      fieldErrors.live_url ? 'border-red-700' : 'border-[#26282f]'
                     }`}
                   />
                   {fieldErrors.live_url && (
@@ -649,7 +649,7 @@ export const AdminProjectsManager: React.FC = () => {
               {/* Display Order + Publish */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium uppercase tracking-wider text-slate-300">
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">
                     Display Order
                   </label>
                   <input
@@ -657,9 +657,9 @@ export const AdminProjectsManager: React.FC = () => {
                     min={0}
                     value={formData.display_order}
                     onChange={(e) => setField('display_order', e.target.value)}
-                    className="mt-1 block w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-xl border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2.5 text-sm text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                   />
-                  <p className="mt-1 text-[11px] text-slate-500">Lower = shown first on portfolio</p>
+                  <p className="mt-1 text-[11px] text-zinc-500">Lower = shown first on portfolio</p>
                 </div>
 
                 <div className="flex flex-col justify-end pb-1">
@@ -669,27 +669,27 @@ export const AdminProjectsManager: React.FC = () => {
                       type="checkbox"
                       checked={formData.is_published}
                       onChange={(e) => setField('is_published', e.target.checked)}
-                      className="h-4 w-4 rounded border-slate-700 bg-slate-950 text-emerald-500 focus:ring-emerald-500"
+                      className="h-4 w-4 rounded border-[#26282f] bg-[#0a0a0c] text-emerald-500 focus:ring-accent/40"
                     />
-                    <span className="text-xs font-medium text-slate-300">Publish immediately</span>
+                    <span className="text-xs font-medium text-zinc-300">Publish immediately</span>
                   </label>
-                  <p className="mt-1 ml-6 text-[11px] text-slate-500">Visible to public visitors</p>
+                  <p className="mt-1 ml-6 text-[11px] text-zinc-500">Visible to public visitors</p>
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#1c1e24]">
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-xs font-medium text-slate-300 hover:bg-slate-750 transition-colors"
+                  className="rounded-full border border-[#2a2d36] bg-transparent px-4 py-2 text-xs font-medium text-zinc-300 hover:bg-[#17181d] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="rounded-xl bg-emerald-500 px-5 py-2 text-xs font-semibold text-slate-950 hover:bg-emerald-400 disabled:opacity-50 transition-colors"
+                  className="rounded-full bg-accent px-5 py-2 text-xs font-semibold text-zinc-950 hover:brightness-110 disabled:opacity-50 transition-colors"
                 >
                   {submitting ? 'Saving...' : isEditing ? 'Update Project' : 'Create Project'}
                 </button>
@@ -701,10 +701,10 @@ export const AdminProjectsManager: React.FC = () => {
 
       {/* ── DELETE CONFIRMATION MODAL ─────────────────────────────── */}
       {projectToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-3xl border border-red-900/40 bg-slate-900 p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-3xl border border-red-900/40 bg-[#0f1013] p-6 shadow-2xl">
             <h3 className="text-base font-bold text-white">Delete Project</h3>
-            <p className="mt-2 text-xs leading-relaxed text-slate-300">
+            <p className="mt-2 text-xs leading-relaxed text-zinc-300">
               Are you sure you want to delete{' '}
               <strong className="text-white">&quot;{projectToDelete.title}&quot;</strong>?{' '}
               This action cannot be undone and will immediately remove the project from your public portfolio.
@@ -713,7 +713,7 @@ export const AdminProjectsManager: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setProjectToDelete(null)}
-                className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-xs font-medium text-slate-300 hover:bg-slate-750 transition-colors"
+                className="rounded-full border border-[#2a2d36] bg-transparent px-4 py-2 text-xs font-medium text-zinc-300 hover:bg-[#17181d] transition-colors"
               >
                 Cancel
               </button>
@@ -721,7 +721,7 @@ export const AdminProjectsManager: React.FC = () => {
                 type="button"
                 disabled={deleting}
                 onClick={handleConfirmDelete}
-                className="rounded-xl bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-500 disabled:opacity-50 transition-colors"
+                className="rounded-full bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-500 disabled:opacity-50 transition-colors"
               >
                 {deleting ? 'Deleting...' : 'Yes, Delete'}
               </button>

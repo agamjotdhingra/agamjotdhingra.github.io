@@ -10,8 +10,8 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="w-full border-t border-[#1c1e24] py-12 text-xs text-zinc-400">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 px-6 sm:flex-row sm:px-8">
+    <footer className="w-full border-t border-[#16171c] py-12 text-xs text-zinc-400">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 sm:flex-row sm:px-8">
         {/* Name & Academic Context */}
         <div className="flex flex-col items-center gap-1 sm:items-start">
           <div className="flex items-center gap-2">
@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
             href="https://github.com/agamjotdhingra"
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors hover:text-zinc-200"
+            className="link-underline transition-colors hover:text-zinc-200"
           >
             GitHub
           </a>
@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
             href="https://linkedin.com/in/agamjot-singh-dhingra-3216b7293"
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors hover:text-zinc-200"
+            className="link-underline transition-colors hover:text-zinc-200"
           >
             LinkedIn
           </a>

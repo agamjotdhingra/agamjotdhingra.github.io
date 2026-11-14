@@ -148,7 +148,7 @@ export const AdminExplorationsManager: React.FC = () => {
       {/* Header & Create Trigger */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-white">Currently Exploring CMS</h2>
+          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Currently Exploring CMS</h2>
           <p className="text-xs text-zinc-400">
             Log, update, and publish topics, papers, and technologies you are actively exploring.
           </p>
@@ -156,7 +156,7 @@ export const AdminExplorationsManager: React.FC = () => {
         <button
           type="button"
           onClick={openCreateModal}
-          className="inline-flex items-center justify-center rounded-lg bg-zinc-100 px-4 py-2 text-xs font-semibold text-zinc-950 transition-colors hover:bg-white shrink-0"
+          className="inline-flex items-center justify-center rounded-full bg-zinc-100 px-4 py-2 text-xs font-semibold text-zinc-950 transition-colors hover:bg-white shrink-0"
         >
           + Add Exploration
         </button>
@@ -178,11 +178,11 @@ export const AdminExplorationsManager: React.FC = () => {
       {loading ? (
         <div className="space-y-3 animate-pulse">
           {[1, 2].map((i) => (
-            <div key={i} className="h-20 rounded-xl border border-[#1e2026] bg-[#111215]" />
+            <div key={i} className="h-20 rounded-xl border border-[#1c1e24] bg-[#0f1013]" />
           ))}
         </div>
       ) : items.length === 0 ? (
-        <div className="rounded-2xl border border-[#1e2026] bg-[#111215] p-10 text-center">
+        <div className="rounded-2xl border border-[#1c1e24] bg-[#0f1013] p-10 text-center">
           <h4 className="text-sm font-medium text-zinc-300">No explorations logged</h4>
           <p className="mt-1 text-xs text-zinc-500">
             Click &ldquo;+ Add Exploration&rdquo; above to document an active topic you are studying.
@@ -193,7 +193,7 @@ export const AdminExplorationsManager: React.FC = () => {
           {items.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[#1e2026] bg-[#111215] p-5 transition-colors hover:border-zinc-700"
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[#1c1e24] bg-[#0f1013] p-5 transition-colors hover:border-accent/40"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400">
@@ -227,7 +227,7 @@ export const AdminExplorationsManager: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => openEditModal(item)}
-                  className="rounded-lg border border-[#272930] bg-[#15161a] px-2.5 py-1 text-xs text-zinc-300 hover:text-white"
+                  className="rounded-full border border-[#26282f] bg-transparent px-2.5 py-1 text-xs text-zinc-300 hover:text-white"
                 >
                   Edit
                 </button>
@@ -263,7 +263,7 @@ export const AdminExplorationsManager: React.FC = () => {
       {isEditorOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsEditorOpen(false)} />
-          <div className="relative z-10 flex max-h-[92vh] w-full max-w-xl flex-col rounded-2xl border border-[#272930] bg-[#101114] shadow-2xl overflow-hidden">
+          <div className="relative z-10 flex max-h-[92vh] w-full max-w-xl flex-col rounded-2xl border border-[#26282f] bg-[#101114] shadow-2xl overflow-hidden">
             <div className="flex items-center justify-between border-b border-[#1c1e24] px-6 py-4">
               <h3 className="text-sm font-semibold text-white">
                 {editingId ? 'Edit Exploration' : 'Log New Exploration'}
@@ -279,34 +279,34 @@ export const AdminExplorationsManager: React.FC = () => {
 
             <div className="overflow-y-auto px-6 py-6 space-y-4">
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400">Topic Title</label>
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Topic Title</label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="e.g. RISC-V Pipeline Execution & Branch Prediction"
-                  className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400">Category / Domain</label>
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Category / Domain</label>
                   <input
                     type="text"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     placeholder="Electronics, AI, Systems"
-                    className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400">Learning Status</label>
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Learning Status</label>
                   <select
                     value={formData.learning_status}
                     onChange={(e) => setFormData({ ...formData, learning_status: e.target.value })}
-                    className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                   >
                     {STATUS_OPTIONS.map((opt) => (
                       <option key={opt} value={opt}>
@@ -318,24 +318,24 @@ export const AdminExplorationsManager: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400">Summary &amp; Context</label>
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Summary &amp; Context</label>
                 <textarea
                   rows={3}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="What are you studying or attempting to understand?"
-                  className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400">Detailed Notes &amp; Reading References</label>
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Detailed Notes &amp; Reading References</label>
                 <textarea
                   rows={4}
                   value={formData.detailed_notes}
                   onChange={(e) => setFormData({ ...formData, detailed_notes: e.target.value })}
                   placeholder="Textbooks, lab sheets, research papers, or key progress points..."
-                  className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
             </div>
@@ -345,7 +345,7 @@ export const AdminExplorationsManager: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsEditorOpen(false)}
-                className="rounded-lg border border-[#272930] bg-[#15161a] px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
+                className="rounded-full border border-[#26282f] bg-transparent px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
               >
                 Cancel
               </button>
@@ -353,7 +353,7 @@ export const AdminExplorationsManager: React.FC = () => {
                 type="button"
                 disabled={saving}
                 onClick={() => handleSave('draft')}
-                className="rounded-lg border border-zinc-700 bg-zinc-800 px-3.5 py-1.5 text-xs font-medium text-zinc-200 hover:text-white disabled:opacity-50"
+                className="rounded-full border border-[#2a2d36] bg-transparent px-3.5 py-1.5 text-xs font-medium text-zinc-200 hover:text-white disabled:opacity-50"
               >
                 Save Draft
               </button>
@@ -361,7 +361,7 @@ export const AdminExplorationsManager: React.FC = () => {
                 type="button"
                 disabled={saving}
                 onClick={() => handleSave('published')}
-                className="rounded-lg bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-950 hover:bg-white disabled:opacity-50"
+                className="rounded-full bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-950 hover:bg-white disabled:opacity-50"
               >
                 Publish Exploration
               </button>
@@ -383,7 +383,7 @@ export const AdminExplorationsManager: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setItemToDelete(null)}
-                className="rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
+                className="rounded-full border border-[#2a2d36] bg-transparent px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
               >
                 Cancel
               </button>
@@ -391,7 +391,7 @@ export const AdminExplorationsManager: React.FC = () => {
                 type="button"
                 disabled={deleting}
                 onClick={handleDelete}
-                className="rounded-lg bg-red-600 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-red-500 disabled:opacity-50"
+                className="rounded-full bg-red-600 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-red-500 disabled:opacity-50"
               >
                 {deleting ? 'Deleting...' : 'Delete Permanently'}
               </button>

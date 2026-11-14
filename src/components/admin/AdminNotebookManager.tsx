@@ -175,7 +175,7 @@ export const AdminNotebookManager: React.FC = () => {
       {/* Header & Create Trigger */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-white">Engineering Notebook CMS</h2>
+          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Engineering Notebook CMS</h2>
           <p className="text-xs text-zinc-400">
             Create, edit, draft, and publish technical articles and experiment logs.
           </p>
@@ -183,7 +183,7 @@ export const AdminNotebookManager: React.FC = () => {
         <button
           type="button"
           onClick={openCreateModal}
-          className="inline-flex items-center justify-center rounded-lg bg-zinc-100 px-4 py-2 text-xs font-semibold text-zinc-950 transition-colors hover:bg-white shrink-0"
+          className="inline-flex items-center justify-center rounded-full bg-zinc-100 px-4 py-2 text-xs font-semibold text-zinc-950 transition-colors hover:bg-white shrink-0"
         >
           + Create New Article
         </button>
@@ -205,11 +205,11 @@ export const AdminNotebookManager: React.FC = () => {
       {loading ? (
         <div className="space-y-3 animate-pulse">
           {[1, 2].map((i) => (
-            <div key={i} className="h-20 rounded-xl border border-[#1e2026] bg-[#111215]" />
+            <div key={i} className="h-20 rounded-xl border border-[#1c1e24] bg-[#0f1013]" />
           ))}
         </div>
       ) : entries.length === 0 ? (
-        <div className="rounded-2xl border border-[#1e2026] bg-[#111215] p-10 text-center">
+        <div className="rounded-2xl border border-[#1c1e24] bg-[#0f1013] p-10 text-center">
           <h4 className="text-sm font-medium text-zinc-300">No articles in the notebook</h4>
           <p className="mt-1 text-xs text-zinc-500">
             Click &ldquo;Create New Article&rdquo; above to write your first technical breakdown.
@@ -220,7 +220,7 @@ export const AdminNotebookManager: React.FC = () => {
           {entries.map((entry) => (
             <div
               key={entry.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[#1e2026] bg-[#111215] p-5 transition-colors hover:border-zinc-700"
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[#1c1e24] bg-[#0f1013] p-5 transition-colors hover:border-accent/40"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400">
@@ -249,7 +249,7 @@ export const AdminNotebookManager: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setPreviewEntry(entry)}
-                  className="rounded-lg border border-[#272930] bg-[#15161a] px-2.5 py-1 text-xs text-zinc-300 hover:text-white"
+                  className="rounded-full border border-[#26282f] bg-transparent px-2.5 py-1 text-xs text-zinc-300 hover:text-white"
                   title="Preview article"
                 >
                   Preview
@@ -257,7 +257,7 @@ export const AdminNotebookManager: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => openEditModal(entry)}
-                  className="rounded-lg border border-[#272930] bg-[#15161a] px-2.5 py-1 text-xs text-zinc-300 hover:text-white"
+                  className="rounded-full border border-[#26282f] bg-transparent px-2.5 py-1 text-xs text-zinc-300 hover:text-white"
                 >
                   Edit
                 </button>
@@ -293,7 +293,7 @@ export const AdminNotebookManager: React.FC = () => {
       {isEditorOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsEditorOpen(false)} />
-          <div className="relative z-10 flex max-h-[92vh] w-full max-w-2xl flex-col rounded-2xl border border-[#272930] bg-[#101114] shadow-2xl overflow-hidden">
+          <div className="relative z-10 flex max-h-[92vh] w-full max-w-2xl flex-col rounded-2xl border border-[#26282f] bg-[#101114] shadow-2xl overflow-hidden">
             <div className="flex items-center justify-between border-b border-[#1c1e24] px-6 py-4">
               <h3 className="text-sm font-semibold text-white">
                 {editingId ? 'Edit Article' : 'Create New Article'}
@@ -309,63 +309,63 @@ export const AdminNotebookManager: React.FC = () => {
 
             <div className="overflow-y-auto px-6 py-6 space-y-4">
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400">Title</label>
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Title</label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={(e) => handleTitleChange(e.target.value)}
                   placeholder="e.g. Evaluating Classifier Behavior on Imbalanced Distributions"
-                  className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400">Category / Domain</label>
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Category / Domain</label>
                   <input
                     type="text"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     placeholder="Electronics, AI, Software"
-                    className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400">Publication Date</label>
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Publication Date</label>
                   <input
                     type="text"
                     value={formData.publication_date}
                     onChange={(e) => setFormData({ ...formData, publication_date: e.target.value })}
                     placeholder="e.g. Nov 2024"
-                    className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono uppercase text-zinc-400">Reading Time</label>
+                  <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Reading Time</label>
                   <input
                     type="text"
                     value={formData.reading_time}
                     onChange={(e) => setFormData({ ...formData, reading_time: e.target.value })}
                     placeholder="e.g. 5 min read"
-                    className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3 py-2 text-xs text-white focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400">Short Summary / Description</label>
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Short Summary / Description</label>
                 <textarea
                   rows={2}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Brief 1-2 sentence overview shown in notebook feeds"
-                  className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase text-zinc-400">Full Article Content</label>
+                <label className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-zinc-500">Full Article Content</label>
                 <p className="text-[11px] text-zinc-500 mb-1">Supports Markdown headers (###), bullet lists, and paragraphs.</p>
                 <textarea
                   rows={8}
@@ -373,7 +373,7 @@ export const AdminNotebookManager: React.FC = () => {
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   placeholder="Write full article body here..."
-                  className="mt-1 block w-full rounded-lg border border-[#272930] bg-[#0a0a0c] px-3.5 py-2.5 font-mono text-xs text-white placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-lg border border-[#26282f] bg-[#0a0a0c] px-3.5 py-2.5 font-mono text-xs text-white placeholder-zinc-500 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 focus:outline-none"
                 />
               </div>
             </div>
@@ -393,7 +393,7 @@ export const AdminNotebookManager: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditorOpen(false)}
-                  className="rounded-lg border border-[#272930] bg-[#15161a] px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
+                  className="rounded-full border border-[#26282f] bg-transparent px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
                 >
                   Cancel
                 </button>
@@ -401,7 +401,7 @@ export const AdminNotebookManager: React.FC = () => {
                   type="button"
                   disabled={saving}
                   onClick={() => handleSave('draft')}
-                  className="rounded-lg border border-zinc-700 bg-zinc-800 px-3.5 py-1.5 text-xs font-medium text-zinc-200 hover:text-white disabled:opacity-50"
+                  className="rounded-full border border-[#2a2d36] bg-transparent px-3.5 py-1.5 text-xs font-medium text-zinc-200 hover:text-white disabled:opacity-50"
                 >
                   Save Draft
                 </button>
@@ -409,7 +409,7 @@ export const AdminNotebookManager: React.FC = () => {
                   type="button"
                   disabled={saving}
                   onClick={() => handleSave('published')}
-                  className="rounded-lg bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-950 hover:bg-white disabled:opacity-50"
+                  className="rounded-full bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-950 hover:bg-white disabled:opacity-50"
                 >
                   Publish Article
                 </button>
@@ -432,7 +432,7 @@ export const AdminNotebookManager: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setEntryToDelete(null)}
-                className="rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
+                className="rounded-full border border-[#2a2d36] bg-transparent px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
               >
                 Cancel
               </button>
@@ -440,7 +440,7 @@ export const AdminNotebookManager: React.FC = () => {
                 type="button"
                 disabled={deleting}
                 onClick={handleDelete}
-                className="rounded-lg bg-red-600 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-red-500 disabled:opacity-50"
+                className="rounded-full bg-red-600 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-red-500 disabled:opacity-50"
               >
                 {deleting ? 'Deleting...' : 'Delete Permanently'}
               </button>
